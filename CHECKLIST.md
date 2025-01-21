@@ -19,17 +19,17 @@ Es wird dringend empfohlen, diese Checkliste in Ihr eigenes Projekt-Repository z
 ## Checkliste für die eigene fortlaufende Übung / TechDemo in Continuous Delivery
 
 ### Einführung und Grundlagen
-- [ ] Verständnis von Continuous Delivery und dessen Bedeutung
-- [ ] Unterschiede zwischen Continuous Integration, Continuous Delivery und Continuous Deployment
-- [ ] CI-Anti Pattern identifizieren
+- [x] Verständnis von Continuous Delivery und dessen Bedeutung
+- [x] Unterschiede zwischen Continuous Integration, Continuous Delivery und Continuous Deployment
+- [x] CI-Anti Pattern identifizieren
 
 ### 20% Projekt Setup
-- [ ] Initialisierung des Repository (Git) -> (Blank Project + Project Name = nachname) 
-- [ ] Checkliste kopieren und in neues geklontes Repository/project einfügen
-- [ ] Checkliste versionieren
+- [x] Initialisierung des Repository (Git) -> (Blank Project + Project Name = nachname) 
+- [x] Checkliste kopieren und in neues geklontes Repository/project einfügen
+- [x] Checkliste versionieren
 - [ ] README anfertigen mit Verlinkungen, Hinweisen, etc. zum Inhalt des Repository
-- [ ] zweites Repository für Übungen, Ausprobieren, etc. inkl. README sowie Verlinkungen und Übersicht zu den Übungen
-- [ ] .gitignore angepasst: Stelle sicher, dass unnötige Dateien nicht im Repository landen (z. B. durch ein angepasstes .gitignore-File).
+- [x] zweites Repository für Übungen, Ausprobieren, etc. inkl. README sowie Verlinkungen und Übersicht zu den Übungen
+- [x] .gitignore angepasst: Stelle sicher, dass unnötige Dateien nicht im Repository landen (z. B. durch ein angepasstes .gitignore-File).
 
 ### 10% Automatisierung
 - [ ] Automatisierte Builds eingerichtet
@@ -38,7 +38,7 @@ Es wird dringend empfohlen, diese Checkliste in Ihr eigenes Projekt-Repository z
 - [ ] Automatisierte Code-Qualitätsanalyse: Setze statische Code-Analyse-Tools ein, um Codequalität automatisiert zu überprüfen.
 
 ### 10% Testing
-- [ ] (Unit) Tests geschrieben und automatisiert
+- [x] (Unit) Tests geschrieben und automatisiert
 - [ ] Integrationstests implementiert (optional)
 - [ ] End-to-End Tests eingerichtet (optional)
 
@@ -57,7 +57,7 @@ Es wird dringend empfohlen, diese Checkliste in Ihr eigenes Projekt-Repository z
 - [ ] Infrastructure as Code (IaC): Nutze Tools wie Terraform oder Ansible, um die Infrastruktur als Code zu verwalten und sicherzustellen, dass Deployments wiederholbar sind.
 
 ### 10% Sicherheit
-- [ ] Zugangsdaten sicher hinterlegt
+- [] Zugangsdaten sicher hinterlegt
 - [ ] Sicherheitsüberprüfungen: Integriere automatisierte Sicherheitstests (z. B. OWASP ZAP) in die Pipeline, um potenzielle Sicherheitslücken frühzeitig zu erkennen.
 
 ### Datenbanken

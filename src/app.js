@@ -3,9 +3,23 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { Sequelize, DataTypes } = require("sequelize");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+const { body, validationResult } = require("express-validator");
+const rateLimit = require("express-rate-limit");
 
 // Create express app
 const app = express();
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+});
+
+app.use(limiter);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Middleware
 app.use(cors());
@@ -64,7 +78,11 @@ app.get("/api/users/:id", async (req, res) => {
   }
 });
 
-app.post("/api/users", async (req, res) => {
+app.post("/api/users", body("email").isEmail().withMessage("Invalid email format"), async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   try {
     const user = await User.create(req.body);
     res.status(201).json(user);
@@ -117,7 +135,6 @@ const initializeServer = async () => {
   }
 };
 
-// Start server if not in test environment
 if (process.env.NODE_ENV !== "test") {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, "0.0.0.0", () => {
