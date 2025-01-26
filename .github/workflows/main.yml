@@ -33,7 +33,7 @@ jobs:
         run: NODE_ENV=test npm run coverage
 
       - name: Upload coverage report (optional)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: coverage/ 
@@ -43,7 +43,7 @@ jobs:
 
   docker_build_and_push:
     needs: build_and_test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # docker-image nur bauen, wenn test erfolgreich waren
     if: github.ref == 'refs/heads/main' && success()
     steps:
