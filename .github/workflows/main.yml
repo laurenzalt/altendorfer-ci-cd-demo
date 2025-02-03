@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build_and_test:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -20,11 +20,41 @@ jobs:
         with:
           node-version: 18
 
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install Dependencies
         run: npm install
 
       - name: Lint Code
         run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: npm install
 
       - name: Run Tests
         run: npm test
@@ -32,19 +62,43 @@ jobs:
       - name: Run Coverage (optional)
         run: NODE_ENV=test npm run coverage
 
-      - name: Upload coverage report (optional)
+      - name: Upload Coverage Report (optional)
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coverage/ 
+          path: coverage/
+
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: npm install
 
       - name: Security Check (npm audit)
-        run: npm audit --audit-level=moderate # level anpassbar
+        run: npm audit --audit-level=moderate
 
   docker_build_and_push:
-    needs: build_and_test
-    runs-on: ubuntu-24.04
-    # docker-image nur bauen, wenn test erfolgreich waren
+    needs:
+      - lint
+      - test
+      - audit
+    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && success()
     steps:
       - name: Checkout Repository
